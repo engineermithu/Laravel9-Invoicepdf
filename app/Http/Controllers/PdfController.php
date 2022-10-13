@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
-
+use Response;
+use DB;
 class PdfController extends Controller
 {
    public function generatePdf(){
@@ -17,5 +18,16 @@ class PdfController extends Controller
        $data = 'mithu.com';
        $pdf = Pdf::loadView('pdf.billing_invoice', compact('data'));
        return $pdf->download('billing-invoice.pdf');
+   }
+
+   public function getDistrictsByDivision(Request $request){
+
+       $data        = $request->all();
+       $districts   = DB::table('districts')
+           ->where('districts.division_id','=',$data['division'])
+           ->select('id','name')
+           ->get();
+//       return Response::json($districts);
+       return response()->json($districts);
    }
 }
