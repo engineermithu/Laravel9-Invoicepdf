@@ -3,28 +3,16 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="'X-CSRF-TOKEN'" content="{{csrf_token()}}">
+    <meta name="X-CSRF-TOKEN" content="{{csrf_token()}}">
     <title>Bootstrap demo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.33/sweetalert2.all.js"></script>
     <style>
-        i.fa.fa-solid.fa-file-pdf {
-            font-size: 17px;
-        }
 
-        i.bx.bx-printer {
-            font-size: 16px;
-        }
-        i.bx.bxs-printer {
-            font-size: 16px;
-            color: #000;
-        }
-
-        i.bx.bx-printer:hover {
-
-        }
         a.btn.btn-sm.btn-outline-warning.rounded-circle:hover{
             color: #f7fafc;
         }
@@ -33,6 +21,9 @@
         }
         a.btn.btn-sm.btn-outline-info.rounded-circle:hover {
             color: #f7fafc;
+        }
+        a.btn.btn-sm.btn-outline-secondary.rounded-circle {
+            font-size: 15px;
         }
     </style>
 </head>
@@ -45,141 +36,28 @@
                     <table class="table table-bordered table-striped" id="example">
                         <thead class="bg-info text-white">
                         <tr>
-                            <th>SL</th>
-                            <th>SL</th>
-                            <th>SL</th>
+                            <th>Bill ID</th>
+                            <th>Order No</th>
+                            <th>Date</th>
                             <th class="text-center">Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Tiger Nixon</td>
-                            <td>System Architect</td>
-                            <td>Edinburgh</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-outline-info rounded-circle" data-bs-toggle="modal" data-bs-target="#cardModal"><i class="fa-regular fa-eye"></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-success rounded-circle"><i class=" bx bx-edit "></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-danger rounded-circle"><i class='bx bx-trash'></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-secondary rounded-circle"><i class="fa fa-solid fa-file-pdf"></i></a>
-                                <a href="#" class="btn btn-sm btn-outline-warning rounded-circle"> <i class='bx bx-printer'></i> </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Tiger Nixon2</td>
-                            <td>System Architect2</td>
-                            <td>Edinburgh2</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-outline-info rounded-circle"><i class="fa-regular fa-eye"></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-success rounded-circle"><i class=" bx bx-edit "></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-danger rounded-circle"><i class='bx bx-trash'></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-secondary rounded-circle"><i class="fa fa-solid fa-file-pdf"></i></a>
-                                <a href="#" class="btn btn-sm btn-outline-warning rounded-circle"> <i class=' bx bx-printer'></i> </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Tiger Nixon3</td>
-                            <td>System Architect3</td>
-                            <td>Edinburgh3</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-outline-primary rounded-circle"><i class="fa-regular fa-eye"></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-success rounded-circle"><i class=" bx bx-edit "></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-danger rounded-circle"><i class='bx bx-trash'></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-secondary rounded-circle"><i class="fa fa-solid fa-file-pdf"></i></a>
-                                <a href="#" class="btn btn-sm btn-outline-warning rounded-circle"> <i class=' bx bx-printer'></i> </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Tiger Nixon4</td>
-                            <td>System Architect4</td>
-                            <td>Edinburgh4</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-outline-primary rounded-circle"><i class="fa-regular fa-eye"></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-success rounded-circle"><i class=" bx bx-edit "></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-danger rounded-circle"><i class='bx bx-trash'></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-secondary rounded-circle"><i class="fa fa-solid fa-file-pdf"></i></a>
-                                <a href="#" class="btn btn-sm btn-outline-warning rounded-circle"> <i class=' bx bx-printer'></i> </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Tiger Nixon5</td>
-                            <td>System Architect5</td>
-                            <td>Edinburgh5</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-outline-primary rounded-circle"><i class="fa-regular fa-eye"></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-success rounded-circle"><i class=" bx bx-edit "></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-danger rounded-circle"><i class='bx bx-trash'></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-secondary rounded-circle"><i class="fa fa-solid fa-file-pdf"></i></a>
-                                <a href="#" class="btn btn-sm btn-outline-warning rounded-circle"> <i class=' bx bx-printer'></i> </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Tiger Nixon6</td>
-                            <td>System Architect6</td>
-                            <td>Edinburgh6</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-outline-success rounded-circle"><i class=" bx bx-edit "></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-danger rounded-circle"><i class='bx bx-trash'></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-secondary rounded-circle"><i class="fa fa-solid fa-file-pdf"></i></a>
-                                <a href="#" class="btn btn-sm btn-outline-warning rounded-circle"> <i class=' bx bx-printer'></i> </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Tiger Nixon7</td>
-                            <td>System Architect7</td>
-                            <td>Edinburgh7</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-outline-success rounded-circle"><i class=" bx bx-edit "></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-danger rounded-circle"><i class='bx bx-trash'></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-secondary rounded-circle"><i class="fa fa-solid fa-file-pdf"></i></a>
-                                <a href="#" class="btn btn-sm btn-outline-warning rounded-circle"> <i class=' bx bx-printer'></i> </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Tiger Nixon8</td>
-                            <td>System Architect8</td>
-                            <td>Edinburgh8</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-outline-success rounded-circle"><i class=" bx bx-edit "></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-danger rounded-circle"><i class='bx bx-trash'></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-secondary rounded-circle"><i class="fa fa-solid fa-file-pdf"></i></a>
-                                <a href="#" class="btn btn-sm btn-outline-warning rounded-circle"> <i class=' bx bx-printer'></i> </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Tiger Nixon9</td>
-                            <td>System Architect9</td>
-                            <td>Edinburgh9</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-outline-success rounded-circle"><i class=" bx bx-edit "></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-danger rounded-circle"><i class='bx bx-trash'></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-secondary rounded-circle"><i class="fa fa-solid fa-file-pdf"></i></a>
-                                <a href="#" class="btn btn-sm btn-outline-warning rounded-circle"> <i class=' bx bx-printer'></i> </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Tiger Nixon10</td>
-                            <td>System Architect10</td>
-                            <td>Edinburgh10</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-outline-info rounded-circle"><i class="fa-regular fa-eye"></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-success rounded-circle"><i class=" bx bx-edit "></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-danger rounded-circle"><i class='bx bx-trash'></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-secondary rounded-circle"><i class="fa fa-solid fa-file-pdf"></i></a>
-                                <a href="#" class="btn btn-sm btn-outline-warning rounded-circle"> <i class=' bx bx-printer'></i> </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Tiger Nixon11</td>
-                            <td>System Architect11</td>
-                            <td>Edinburgh11</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-outline-info rounded-circle"><i class="fa-regular fa-eye"></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-success rounded-circle"><i class=" bx bx-edit "></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-danger rounded-circle"><i class='bx bx-trash'></i> </a>
-                                <a href="#" class="btn btn-sm btn-outline-secondary rounded-circle"><i class="fa fa-solid fa-file-pdf"></i></a>
-                                <a href="#" class="btn btn-sm btn-outline-warning rounded-circle"> <i class=' bx bx-printer'></i> </a>
-                            </td>
-                        </tr>
+                        @foreach($datas as $values)
+                            <tr>
+                               <td>{{$values->bill_id}}</td>
+                               <td>{{$values->order_no}}</td>
+                               <td>{{$values->date}}</td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-outline-info rounded-circle" data-bs-toggle="modal" data-bs-target="#cardModal"><i class="fa-regular fa-eye"></i> </a>
+                                    <a href="#" class="btn btn-sm btn-outline-success rounded-circle"><i class=" bx bx-edit "></i> </a>
+                                    <button class="btn btn-sm btn-outline-danger rounded-circle" onclick="deleteData($values.id)"><i class='bx bx-trash'></i> </button>
+                                    <a href="{{ route('generate.pdf') }}" target="_blank" class="btn btn-sm btn-outline-warning rounded-circle"><i class="bx bx-printer"></i></a>
+                                    <button class="btn btn-sm btn-outline-secondary rounded-circle" onclick="downloadBtn()"><i class='bx bx-download '></i> </button>
+                                </td>
+                            </tr>
+                        @endforeach
+
                         </tbody>
                     </table>
                 </div>
@@ -228,9 +106,9 @@
                             <label for="division">Division</label>
                             <select name="division" id="division" class="form-control" >
                                 <option value="" selected disabled>------  Select  ------</option>
-                                @foreach($divisions as $division)
-                                    <option value="{{$division->id}}">{{$division->name}}</option>
-                                @endforeach
+{{--                                @foreach($divisions as $division)--}}
+{{--                                    <option value="{{$division->id}}">{{$division->name}}</option>--}}
+{{--                                @endforeach--}}
                             </select>
                         </div>
                         <div class="col-md-6">
@@ -351,6 +229,18 @@
     $("#billEdit").hide();
     $("#billGenerateBtn").show();
     $("#billUpdateBtn").hide();
+    $.ajaxSetup({ headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' } });
+
+    function downloadBtn(){
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "/download-pdf",
+            success: function (data){
+                console.log(data)
+            }
+        })
+    }
 
     function addData(){
         let bill_id         = $('#bill_id').val();
@@ -376,28 +266,43 @@
             type: "POST",
             dataType: "json",
             data: {
-                bill_id: bill_id,
-                order_no: order_no,
-                date:   date
+                bill_id:        bill_id,
+                order_no:       order_no,
+                date:           date,
+                phone:          phone,
+                email:          email,
+                name:           name,
+                division:       division,
+                district:       district,
+                address:        address,
+                seller_name:    seller_name,
+                seller_phone:   seller_phone,
+                product_name:   product_name,
+                price:          price,
+                quantity:       quantity,
+                sub_total:      sub_total,
+                vat_tax:        vat_tax,
+                discount:       discount,
+                grand_total:    grand_total
             },
             url: "/generateBill/store/",
             success: function (data){
-
+                const Msg = Swal.mixin({
+                    toast:'true',
+                    position: 'top-end',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1800
+                });
+                Msg.fire({
+                    type: 'success',
+                    title: 'Data Added Successfully'
+                })
             }
         })
-
-
-
-
-
-
-
-
-
-
-
-
-
+    }
+    function deleteData(id){
+        alert(id);
     }
 
     $("#division").change(function(e){
