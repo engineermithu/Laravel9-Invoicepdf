@@ -43,15 +43,15 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($datas as $values)
+                        @foreach($bill as $values)
                             <tr>
                                <td>{{$values->bill_id}}</td>
                                <td>{{$values->order_no}}</td>
                                <td>{{$values->date}}</td>
                                 <td>
-                                    <a href="#" class="btn btn-sm btn-outline-info rounded-circle" data-bs-toggle="modal" data-bs-target="#cardModal"><i class="fa-regular fa-eye"></i> </a>
-                                    <a href="#" class="btn btn-sm btn-outline-success rounded-circle"><i class=" bx bx-edit "></i> </a>
-                                    <button class="btn btn-sm btn-outline-danger rounded-circle" onclick="deleteData($values.id)"><i class='bx bx-trash'></i> </button>
+                                    <a href="#" class="btn btn-sm btn-outline-info rounded-circle" id="viewData" data-bs-toggle="modal" data-modalValue="{{$values->id}}" onclick="viewModalData({{$values->id}})"  data-bs-target="#cardModal"><i class="fa-regular fa-eye"></i> </a>
+                                    <a href="#" class="btn btn-sm btn-outline-success rounded-circle" onclick="editData({{$values->id}})"><i class=" bx bx-edit "></i> </a>
+                                    <button class="btn btn-sm btn-outline-danger rounded-circle" onclick="deleteData({{$values->id}})"><i class='bx bx-trash'></i> </button>
                                     <a href="{{ route('generate.pdf') }}" target="_blank" class="btn btn-sm btn-outline-warning rounded-circle"><i class="bx bx-printer"></i></a>
                                     <button class="btn btn-sm btn-outline-secondary rounded-circle" onclick="downloadBtn()"><i class='bx bx-download '></i> </button>
                                 </td>
@@ -138,7 +138,7 @@
                     </div>
                     <div class="form-group mb-2">
                         <label for="product_description">Product Description</label>
-                        <textarea name="product_description" id="product_description" cols="10" rows="3" class="form-control" placeholder="Write Here...."></textarea>
+                        <textarea name="product_description" id="product_description"  cols="10" rows="3" class="form-control" placeholder="Write Here...."></textarea>
                     </div>
                     <div class="form-group row mb-2">
                         <div class="col-md-6">
@@ -169,8 +169,9 @@
                         <input type="number" class="form-control" name="grand_total" id="grand_total" placeholder="Grand total Price"/>
                     </div>
                     <div class="from-group d-md-flex justify-content-md-end">
+                            <input type="hidden" class="form-control" id="id" />
                             <button class="btn btn-info text-light" id="billGenerateBtn" type="button" onclick="addData()">Generate</button>
-                            <button class="btn btn-info text-light" id="billUpdateBtn" type="button">Update</button>
+                            <button class="btn btn-info text-light" id="billUpdateBtn" type="button" onclick="updateData()" >Update</button>
                     </div>
 
                 </div>
@@ -178,7 +179,7 @@
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="cardModal" data-bs-backdrop="static" data-keyboard="false">
+    <div class="modal fade" id="cardModals" data-bs-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg modal-dialog-center">
             <div class="modal-content">
                 <div class="modal-header">
@@ -216,6 +217,59 @@
             </div>
         </div>
     </div>
+
+
+    <!-- Button trigger modal -->
+{{--    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">--}}
+{{--        Launch demo modal--}}
+{{--    </button>--}}
+
+    <!-- Modal -->
+    <div class="modal fade" id="cardModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Bill Details</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                   <div class="card card-body">
+                       <div class="row">
+                           <div class="col-md-6">
+                              <div class="form-group row">
+                                  <div class="col-md-4">
+                                      <label for="">Bill ID</label>
+                                  </div>
+                                  <div class="col-md-8">
+                                      <input  type="text" readonly class="form-control" id="bill_ids"/>
+                                  </div>
+                              </div>
+                               <div class="form-group row">
+                                  <div class="col-md-4">
+                                      <label for="">Order NO.</label>
+                                  </div>
+                                  <div class="col-md-8">
+                                      <input  type="text" readonly class="form-control" id="order_nos"/>
+                                  </div>
+                              </div>
+                               <div class="form-group row">
+                                   <div class="col-md-4">
+                                       <label for="">Date</label>
+                                   </div>
+                                   <div class="col-md-8">
+                                       <input  type="text" readonly class="form-control" id="dates"/>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="col-md-6"></div>
+                       </div>
+                   </div>
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+        </div>
+    </div>
+
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
@@ -242,50 +296,96 @@
         })
     }
 
+    function view(){
+        $.ajax({
+            type: "GET",
+            dataType: 'json',
+            url: "/all-customer-bill",
+            success:function (response){
+                // var data ="";
+                // $.each(response, function (key,value){
+                //     data = data + "<tr>"
+                //     data = data + "<td>"+value.bill_id+"</td>"
+                //     data = data + "<td>"+value.order_no+"</td>"
+                //     data = data + "<td>"+value.date+"</td>"
+                //     data = data + "<td>"
+                //     data = data + "<button class='btn btn-info text-light' onclick='editData("+value.id+")'>Edit</button>"
+                //     data = data + "<button class='btn btn-danger m-2' onclick='deleteData("+value.id+")'>  Delete</button>"
+                //     data = data + "</td>"
+                //     data = data + "</tr>"
+                // })
+                // $('tbody').html(data);
+            }
+        })
+    }
+    // view();
+
+    function viewModalData(id){
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "/modal-view-data/"+id,
+            success: function (data){
+                // alert(data.id)
+                // alert(data.bill_id);
+                // $('#id').val(data.id);
+                $('#bill_ids').val(data.bill_id);
+                $('#order_nos').val(data.order_no);
+                $('#dates').val(data.date);
+                $("#cardModal").modal('show')
+                // $('#order_no').val(data.order_no);
+                // $('tbody').html(data);
+            }
+        })
+    }
+
     function addData(){
-        let bill_id         = $('#bill_id').val();
-        let order_no        = $('#order_no').val();
-        let date            = $('#date').val();
-        let phone           = $('#phone').val();
-        let email           = $('#email').val();
-        let name            = $('#name').val();
-        let division        = $('#division').val();
-        let district        = $('#district').val();
-        let address         = $('#address').val();
-        let seller_name     = $('#seller_name').val();
-        let seller_phone    = $('#seller_phone').val();
-        let product_name    = $('#product_name').val();
-        let price           = $('#price').val();
-        let quantity        = $('#quantity').val();
-        let sub_total       = $('#sub_total').val();
-        let vat_tax         = $('#vat_tax').val();
-        let discount        = $('#discount').val();
-        let grand_total     = $('#grand_total').val();
+
+        let bill_id             = $('#bill_id').val();
+        let order_no            = $('#order_no').val();
+        let date                = $('#date').val();
+        let phone               = $('#phone').val();
+        let email               = $('#email').val();
+        let name                = $('#name').val();
+        let division            = $('#division').val();
+        let district            = $('#district').val();
+        let address             = $('#address').val();
+        let seller_name         = $('#seller_name').val();
+        let seller_phone        = $('#seller_phone').val();
+        let product_name        = $('#product_name').val();
+        let product_description = $('#product_description').val();
+        let price               = $('#price').val();
+        let quantity            = $('#quantity').val();
+        let sub_total           = $('#sub_total').val();
+        let vat_tax             = $('#vat_tax').val();
+        let discount            = $('#discount').val();
+        let grand_total         = $('#grand_total').val();
 
         $.ajax({
             type: "POST",
             dataType: "json",
             data: {
-                bill_id:        bill_id,
-                order_no:       order_no,
-                date:           date,
-                phone:          phone,
-                email:          email,
-                name:           name,
-                division:       division,
-                district:       district,
-                address:        address,
-                seller_name:    seller_name,
-                seller_phone:   seller_phone,
-                product_name:   product_name,
-                price:          price,
-                quantity:       quantity,
-                sub_total:      sub_total,
-                vat_tax:        vat_tax,
-                discount:       discount,
-                grand_total:    grand_total
+                bill_id:                bill_id,
+                order_no:               order_no,
+                date:                   date,
+                phone:                  phone,
+                email:                  email,
+                name:                   name,
+                division:               division,
+                district:               district,
+                address:                address,
+                seller_name:            seller_name,
+                seller_phone:           seller_phone,
+                product_name:           product_name,
+                product_description:    product_description,
+                price:                  price,
+                quantity:               quantity,
+                sub_total:              sub_total,
+                vat_tax:                vat_tax,
+                discount:               discount,
+                grand_total:            grand_total
             },
-            url: "/generateBill/store/",
+            url: "/generateBill-store",
             success: function (data){
                 const Msg = Swal.mixin({
                     toast:'true',
@@ -296,13 +396,145 @@
                 });
                 Msg.fire({
                     type: 'success',
-                    title: 'Data Added Successfully'
+                    title: 'Bill Generate Successfully'
                 })
+            }
+
+        })
+    }
+    function editData(id){
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "/generate-bill-edit/"+id,
+            success: function (data){
+                $("#billGenerate").hide();
+                $("#billEdit").show();
+                $("#billGenerateBtn").hide();
+                $("#billUpdateBtn").show();
+
+                $('#id').val(data.id);
+                $('#bill_id').val(data.bill_id);
+                $('#order_no').val(data.order_no);
+                $('#date').val(data.date);
+                $('#phone').val(data.phone);
+                $('#email').val(data.email);
+                $('#name').val(data.name);
+                $('#division').val(data.division);
+                $('#district').val(data.district);
+                $('#address').val(data.address);
+                $('#seller_name').val(data.seller_name);
+                $('#seller_phone').val(data.seller_phone);
+                $('#product_name').val(data.product_name);
+                $('#product_description').val(data.product_description);
+                $('#price').val(data.price);
+                $('#quantity').val(data.quantity);
+                $('#sub_total').val(data.sub_total);
+                $('#vat_tax').val(data.vat_tax);
+                $('#discount').val(data.discount);
+                $('#grand_total').val(data.grand_total);
+            }
+        })
+    }
+    function updateData(){
+
+        let id                  = $('#id').val();
+        let bill_id             = $('#bill_id').val();
+        let order_no            = $('#order_no').val();
+        let date                = $('#date').val();
+        let phone               = $('#phone').val();
+        let email               = $('#email').val();
+        let name                = $('#name').val();
+        let division            = $('#division').val();
+        let district            = $('#district').val();
+        let address             = $('#address').val();
+        let seller_name         = $('#seller_name').val();
+        let seller_phone        = $('#seller_phone').val();
+        let product_name        = $('#product_name').val();
+        let product_description = $('#product_description').val();
+        let price               = $('#price').val();
+        let quantity            = $('#quantity').val();
+        let sub_total           = $('#sub_total').val();
+        let vat_tax             = $('#vat_tax').val();
+        let discount            = $('#discount').val();
+        let grand_total         = $('#grand_total').val();
+
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            data: {
+                bill_id:                bill_id,
+                order_no:               order_no,
+                date:                   date,
+                phone:                  phone,
+                email:                  email,
+                name:                   name,
+                division:               division,
+                district:               district,
+                address:                address,
+                seller_name:            seller_name,
+                seller_phone:           seller_phone,
+                product_name:           product_name,
+                product_description:    product_description,
+                price:                  price,
+                quantity:               quantity,
+                sub_total:              sub_total,
+                vat_tax:                vat_tax,
+                discount:               discount,
+                grand_total:            grand_total
+            },
+            url: "/generate-bill-update/"+id,
+            success: function (data) {
+                $("#billGenerate").show();
+                $("#billEdit").hide();
+                $("#billGenerateBtn").show();
+                $("#billUpdateBtn").hide();
+
+
+                // Alert
+                const Msg = Swal.mixin({
+                    toast: 'true',
+                    position: 'top-end',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1800
+                });
+                Msg.fire({
+                    type: 'success',
+                    title: 'Data Updated Successfully'
+                })
+                // End Alert
+                console.log('Successfully Data Update');
             }
         })
     }
     function deleteData(id){
-        alert(id);
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "DELETE",
+                        dataType: "json",
+                        url: "/generate-bill-remove/"+id,
+                        success: function (data){
+                            Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            )
+                        }
+                    })
+                }
+                this.view();
+            })
     }
 
     $("#division").change(function(e){
