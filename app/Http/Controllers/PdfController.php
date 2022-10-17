@@ -1,15 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\GenerateBill;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Response;
 use DB;
 class PdfController extends Controller
 {
-   public function generatePdf(){
+   public function generatePdf($id){
 
-       $data = 'mithu.com';
+       $data = GenerateBill::find($id);
        $pdf = Pdf::loadView('pdf.billing_invoice', compact('data'));
        return $pdf->stream('billing-invoice');
    }

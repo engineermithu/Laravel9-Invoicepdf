@@ -31,7 +31,7 @@ Route::get('/', function () {
 Route::post('/district-by-division', [PdfController::class,'getDistrictsByDivision']);
 
 
-Route::get('/generate-pdf',[PdfController::class,'generatePdf'])->name('generate.pdf');
+Route::get('/generate-pdf/{id}',[PdfController::class,'generatePdf'])->name('generate.pdf');
 Route::get('/download-pdf',[PdfController::class,'downloadPdf'])->name('download.pdf');
 
 Route::post('/generateBill-store', [GenerateBillController::class,'store']);
