@@ -57,7 +57,6 @@
                                 </td>
                             </tr>
                         @endforeach
-
                         </tbody>
                     </table>
                 </div>
@@ -75,31 +74,37 @@
                             <label for="bill_id">Bill ID*</label>
                             <input type="text" class="form-control" name="bill_id" id="bill_id"
                                    placeholder="GT-XX-XXXX" />
+                           <span class="text-danger" id="bill_idError"></span>
                         </div>
                         <div class="col-md-6">
                             <label for="order_no">Order No*</label>
                             <input type="text" class="form-control" name="order_no" id="order_no"
                                    placeholder="FR-XXX-AC"/>
+                            <span class="text-danger" id="order_noError"></span>
                         </div>
                     </div>
                     <div class="from-group mb-2 row">
                         <div class="col-md-6">
                             <label for="date">Date*</label>
                             <input type="date" class="form-control" name="date" id="date"/>
+                            <span class="text-danger" id="dateError"></span>
                         </div>
 
                         <div class="col-md-6">
                             <label for="phone">Phone*</label>
                             <input type="tel" class="form-control" name="phone" id="phone" placeholder="+88 01XXXXXXXXXX"/>
+                            <span class="text-danger" id="phoneError"></span>
                         </div>
                     </div>
                     <div class="from-group mb-2 ">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" name="email" id="email" placeholder="xyz@xxx.com"/>
+                        <label for="email">Email*</label>
+                        <input type="email" class="form-control" name="email" id="email" placeholder="xyz@xxx.com"/>
+                        <span class="text-danger" id="emailError"></span>
                     </div>
                     <div class="form-group mb-2">
-                            <label for="name">Name*</label>
-                            <input type="text" class="form-control" name="name" id="name" placeholder="Name"/>
+                        <label for="name">Name*</label>
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Name"/>
+                        <span class="text-danger" id="nameError"></span>
                     </div>
                     <div class="from-group mb-2 row">
                         <div class="col-md-6">
@@ -126,6 +131,7 @@
                         <div class="col-md-6">
                             <label for="seller_name">Seller Name*</label>
                             <input type="text" class="form-control" name="seller_name" id="seller_name" placeholder="Name"/>
+                            <span class="text-danger" id="seller_nameError"></span>
                         </div>
                         <div class="col-md-6">
                             <label for="seller_phone">Seller Phone</label>
@@ -133,8 +139,9 @@
                         </div>
                     </div>
                     <div class="form-group mb-2">
-                        <label for="product_name">Product Name</label>
+                        <label for="product_name">Product Name*</label>
                         <input type="text" class="form-control" name="product_name" id="product_name" placeholder="Product Name"/>
+                        <span class="text-danger" id="product_nameError"></span>
                     </div>
                     <div class="form-group mb-2">
                         <label for="product_description">Product Description</label>
@@ -142,12 +149,14 @@
                     </div>
                     <div class="form-group row mb-2">
                         <div class="col-md-6">
-                            <label for="price">Price</label>
+                            <label for="price">Price*</label>
                             <input type="number" class="form-control" name="price" id="price" placeholder="Product Price"/>
+                            <span class="text-danger" id="priceError"></span>
                         </div>
                         <div class="col-md-6">
-                                <label for="quantity">Quantity</label>
-                                <input type="number" class="form-control" name="quantity" id="quantity" placeholder="Product Quantity"/>
+                            <label for="quantity">Quantity*</label>
+                            <input type="number" class="form-control" name="quantity" id="quantity" placeholder="Product Quantity"/>
+                            <span class="text-danger" id="quantityError"></span>
                         </div>
                     </div>
                     <div class="from-group mb-2">
@@ -274,6 +283,7 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+
 <script>
     $(document).ready(function () {
         $('#example').DataTable();
@@ -285,6 +295,7 @@
     $("#billUpdateBtn").hide();
     $.ajaxSetup({ headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' } });
 
+    //=================== Download PDF ==================
     function downloadBtn(){
         $.ajax({
             type: "GET",
@@ -296,6 +307,7 @@
         })
     }
 
+    //=================== View Data ==================
     function view(){
         $.ajax({
             type: "GET",
@@ -320,6 +332,7 @@
     }
     // view();
 
+    //=============== View Data in Modal ================
     function viewModalData(id){
         $.ajax({
             type: "GET",
@@ -339,6 +352,7 @@
         })
     }
 
+    //=================== Add Data ===================
     function addData(){
 
         let bill_id             = $('#bill_id').val();
@@ -385,8 +399,9 @@
                 discount:               discount,
                 grand_total:            grand_total
             },
-            url: "/generateBill-store",
+            url: "/generate-bill-store",
             success: function (data){
+                clearData()
                 const Msg = Swal.mixin({
                     toast:'true',
                     position: 'top-end',
@@ -398,10 +413,61 @@
                     type: 'success',
                     title: 'Bill Generate Successfully'
                 })
-            }
+            },
+            error: function (error){
+                $("#bill_idError").text(error.responseJSON.errors.bill_id);
+                $("#order_noError").text(error.responseJSON.errors.order_no);
+                $("#dateError").text(error.responseJSON.errors.date);
+                $("#phoneError").text(error.responseJSON.errors.phone);
+                $("#emailError").text(error.responseJSON.errors.email);
+                $("#nameError").text(error.responseJSON.errors.name);
+                $("#seller_nameError").text(error.responseJSON.errors.seller_name);
+                $("#product_nameError").text(error.responseJSON.errors.product_name);
+                $("#priceError").text(error.responseJSON.errors.price);
+                $("#quantityError").text(error.responseJSON.errors.quantity);
+                // $("#nameError").text(error.responseJSON.errors.name);
 
+                console.log(error.responseJSON.errors.bill_id)
+            }
         })
     }
+
+    //=================== Clear Data ==================
+    function clearData(){
+
+        let bill_id             = $('#bill_id').val('');
+        let order_no            = $('#order_no').val('');
+        let date                = $('#date').val('');
+        let phone               = $('#phone').val('');
+        let email               = $('#email').val('');
+        let name                = $('#name').val('');
+        let division            = $('#division').val('');
+        let district            = $('#district').val('');
+        let address             = $('#address').val('');
+        let seller_name         = $('#seller_name').val('');
+        let seller_phone        = $('#seller_phone').val('');
+        let product_name        = $('#product_name').val('');
+        let product_description = $('#product_description').val('');
+        let price               = $('#price').val('');
+        let quantity            = $('#quantity').val('');
+        let sub_total           = $('#sub_total').val('');
+        let vat_tax             = $('#vat_tax').val('');
+        let discount            = $('#discount').val('');
+        let grand_total         = $('#grand_total').val('');
+
+        let bill_idError        = $('#bill_idError').text('');
+        let order_noError       = $('#order_noError').text('');
+        let dateError           = $('#dateError').text('');
+        let phoneError          = $('#phoneError').text('');
+        let emailError          = $('#emailError').text('');
+        let nameError           = $('#nameError').text('');
+        let seller_nameError    = $('#seller_nameError').text('');
+        let product_nameError   = $('#product_nameError').text('');
+        let priceError          = $('#priceError').text('');
+        let quantityError       = $('#quantityError').text('');
+    }
+
+    //=================== Edit Data ==================
     function editData(id){
         $.ajax({
             type: "GET",
@@ -436,6 +502,8 @@
             }
         })
     }
+
+    //=================== View Update ==================
     function updateData(){
 
         let id                  = $('#id').val();
@@ -485,11 +553,11 @@
             },
             url: "/generate-bill-update/"+id,
             success: function (data) {
+                clearData()
                 $("#billGenerate").show();
                 $("#billEdit").hide();
                 $("#billGenerateBtn").show();
                 $("#billUpdateBtn").hide();
-
 
                 // Alert
                 const Msg = Swal.mixin({
@@ -505,9 +573,26 @@
                 })
                 // End Alert
                 console.log('Successfully Data Update');
+            },
+            error: function (error){
+                $("#bill_idError").text(error.responseJSON.errors.bill_id);
+                $("#order_noError").text(error.responseJSON.errors.order_no);
+                $("#dateError").text(error.responseJSON.errors.date);
+                $("#phoneError").text(error.responseJSON.errors.phone);
+                $("#emailError").text(error.responseJSON.errors.email);
+                $("#nameError").text(error.responseJSON.errors.name);
+                $("#seller_nameError").text(error.responseJSON.errors.seller_name);
+                $("#product_nameError").text(error.responseJSON.errors.product_name);
+                $("#priceError").text(error.responseJSON.errors.price);
+                $("#quantityError").text(error.responseJSON.errors.quantity);
+                // $("#nameError").text(error.responseJSON.errors.name);
+
+                console.log(error.responseJSON.errors.bill_id)
             }
         })
     }
+
+    //=================== Delete Data ==================
     function deleteData(id){
         Swal.fire({
             title: 'Are you sure?',
@@ -537,10 +622,10 @@
             })
     }
 
+    //============== Select District by Division  ==============
     $("#division").change(function(e){
         e.preventDefault();
         var ddlDistrict=$("#district");
-
         $.ajaxSetup({ headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' } });
 
         $.ajax({

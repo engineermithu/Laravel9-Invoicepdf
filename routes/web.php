@@ -34,7 +34,7 @@ Route::post('/district-by-division', [PdfController::class,'getDistrictsByDivisi
 Route::get('/generate-pdf/{id}',[PdfController::class,'generatePdf'])->name('generate.pdf');
 Route::get('/download-pdf',[PdfController::class,'downloadPdf'])->name('download.pdf');
 
-Route::post('/generateBill-store', [GenerateBillController::class,'store']);
+Route::post('/generate-bill-store', [GenerateBillController::class,'store']);
 Route::get('/modal-view-data/{id}', [GenerateBillController::class,'showModalData']);
 Route::delete('/generate-bill-remove/{id}', [GenerateBillController::class,'destroy']);
 Route::get('/all-customer-bill', [GenerateBillController::class,'show']);

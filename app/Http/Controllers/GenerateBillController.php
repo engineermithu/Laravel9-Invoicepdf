@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BillStoreRequest;
+use App\Http\Requests\BillUpdateRequest;
 use App\Models\GenerateBill;
 use Illuminate\Http\Request;
 
@@ -19,7 +21,7 @@ class GenerateBillController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(BillStoreRequest $request)
     {
         try {
             $data                      = new GenerateBill();
@@ -72,7 +74,7 @@ class GenerateBillController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function update(BillUpdateRequest $request, $id)
     {
         try {
             $data = GenerateBill::findOrFail($id)->update([
