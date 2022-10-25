@@ -10,8 +10,8 @@ class PdfController extends Controller
 {
    public function generatePdf($id){
 
-       $data = GenerateBill::find($id);
-       $pdf = Pdf::loadView('pdf.billing_invoice', compact('data'));
+       $customer_bill = GenerateBill::find($id);
+       $pdf = Pdf::loadView('pdf.billing_invoice', compact('customer_bill'));
        return $pdf->stream('billing-invoice');
    }
 
