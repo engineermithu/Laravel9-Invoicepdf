@@ -32,7 +32,7 @@ Route::post('/district-by-division', [PdfController::class,'getDistrictsByDivisi
 
 
 Route::get('/generate-pdf/{id}',[PdfController::class,'generatePdf'])->name('generate.pdf');
-Route::get('/download-pdf',[PdfController::class,'downloadPdf'])->name('download.pdf');
+Route::get('/download-pdf/{id}',[PdfController::class,'downloadPdf'])->name('download.pdf');
 
 Route::post('/generate-bill-store', [GenerateBillController::class,'store']);
 Route::get('/modal-view-data/{id}', [GenerateBillController::class,'showModalData']);

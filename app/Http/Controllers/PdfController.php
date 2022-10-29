@@ -15,9 +15,9 @@ class PdfController extends Controller
        return $pdf->stream('billing-invoice');
    }
 
-   public function downloadPdf(){
-       $data = 'mithu.com';
-       $pdf = Pdf::loadView('pdf.billing_invoice', compact('data'));
+   public function downloadPdf($id){
+       $customer_bill = GenerateBill::find($id);
+       $pdf = Pdf::loadView('pdf.billing_invoice', compact('customer_bill'));
        return $pdf->download('billing-invoice.pdf');
    }
 

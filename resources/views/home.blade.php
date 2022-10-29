@@ -53,7 +53,7 @@
                                     <a href="#" class="btn btn-sm btn-outline-success rounded-circle" onclick="editData({{$values->id}})"><i class=" bx bx-edit "></i> </a>
                                     <button class="btn btn-sm btn-outline-danger rounded-circle" onclick="deleteData({{$values->id}})"><i class='bx bx-trash'></i> </button>
                                     <a href="{{ route('generate.pdf',['id'=> $values->id]) }}" target="_blank" class="btn btn-sm btn-outline-warning rounded-circle"><i class="bx bx-printer"></i></a>
-                                    <button class="btn btn-sm btn-outline-secondary rounded-circle" onclick="downloadBtn()"><i class='bx bx-download '></i> </button>
+                                    <button class="btn btn-sm btn-outline-secondary rounded-circle" onclick="downloadBtn({{$values->id}})"><i class='bx bx-download '></i> </button>
                                 </td>
                             </tr>
                         @endforeach
@@ -296,11 +296,11 @@
     $.ajaxSetup({ headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' } });
 
     //=================== Download PDF ==================
-    function downloadBtn(){
+    function downloadBtn(id){
         $.ajax({
             type: "GET",
             dataType: "json",
-            url: "/download-pdf",
+            url: "/download-pdf/"+id,
             success: function (data){
                 console.log(data)
             }
