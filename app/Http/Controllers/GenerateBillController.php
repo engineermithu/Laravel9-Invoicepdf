@@ -23,6 +23,7 @@ class GenerateBillController extends Controller
 
     public function store(BillStoreRequest $request)
     {
+//        dd($request->all());
         try {
             $data                      = new GenerateBill();
             $data->bill_id             = $request->bill_id;
@@ -32,6 +33,7 @@ class GenerateBillController extends Controller
             $data->email               = $request->email;
             $data->name                = $request->name;
             $data->division            = $request->division;
+            $data->district            = $request->district;
             $data->address             = $request->address;
             $data->seller_name         = $request->seller_name;
             $data->seller_phone        = $request->seller_phone;

@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\GenerateBillController;
-//use Devfaysal\BangladeshGeocode\Models\Division;
-//use Devfaysal\BangladeshGeocode\Models\District;
+use Devfaysal\BangladeshGeocode\Models\Division;
+use Devfaysal\BangladeshGeocode\Models\District;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,11 +20,11 @@ use App\Http\Controllers\GenerateBillController;
 //});
 
 Route::get('/', function () {
-//    $divisions = Division::all();
-//    $districts = District::all();
+    $divisions = Division::all();
+    $districts = District::all();
     $bill = \App\Models\GenerateBill::all();
 //    return $data;
-    return view('home',compact('bill'));
+    return view('home',compact('bill','divisions','districts'));
 
 });
 //Route::post('/district-by-division', 'OfficeSetupController@getDistrictsByDivision');

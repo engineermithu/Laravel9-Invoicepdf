@@ -114,15 +114,18 @@
                             <label for="division">Division</label>
                             <select name="division" id="division" class="form-control" >
                                 <option value="" selected disabled>------  Select  ------</option>
-{{--                                @foreach($divisions as $division)--}}
-{{--                                    <option value="{{$division->id}}">{{$division->name}}</option>--}}
-{{--                                @endforeach--}}
+                                    @foreach($divisions as $division)
+                                        <option value="{{$division->id}}">{{$division->name}}</option>
+                                   @endforeach
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label for="district">District</label>
                             <select name="district" id="district" class="form-control">
                                 <option value="" selected disabled>------  Select  ------</option>
+                                    @foreach($districts as $division)
+                                        <option value="{{$division->id}}">{{$division->name}}</option>
+                                   @endforeach
                             </select>
                         </div>
                     </div>
@@ -439,7 +442,6 @@
                 $("#product_nameError").text(error.responseJSON.errors.product_name);
                 $("#priceError").text(error.responseJSON.errors.price);
                 $("#quantityError").text(error.responseJSON.errors.quantity);
-                // $("#nameError").text(error.responseJSON.errors.name);
 
                 console.log(error.responseJSON.errors.bill_id)
             }
@@ -575,9 +577,9 @@
 
                 // Alert
                 const Msg = Swal.mixin({
-                    toast: 'true',
-                    position: 'top-end',
-                    icon: 'success',
+                    toast:             'true',
+                    position:          'top-end',
+                    icon:              'success',
                     showConfirmButton: false,
                     timer: 1800
                 });

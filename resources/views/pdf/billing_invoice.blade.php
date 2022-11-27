@@ -1,304 +1,89 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> {{ __('Billing Invoice - Faisal') }} </title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
 
+</head>
 <body>
 
 
-<style>
-    * {
-        font-family: 'Roboto', sans-serif;
-        line-height: 26px;
-        font-size: 15px;
-    }
+<div class="container">
+    <div class="row">
+        <div class="col-md-12" style="width: 100%;">
+            <div class="card">
+                <div class="card-body">
+                    <div class="invoice-logo">
+                        <img src="{{ public_path('img/Intel_logo_(2006-2020).jpg') }}" alt="Not Found!" height="70"
+                             width="70"/>
+                    </div>
+                    <small class="fw-bold">Shop: 838, Level: 08, Computer City Center, New Elephant Road, Dhaka: 1205
+                        Phone: 9672391,
+                        e-mail.gterdbd@gmail.com
+                    </small>
+                    <hr>
+                    <div style="float: left ; width:1500px">
+                        <strong>Bill No.</strong><span>{{' '.$customer_bill->bill_id.' '.' '  }}</span>
+                        <strong>Order No.</strong><span>{{' '.$customer_bill->order_no.' ' }}</span>
+                        <strong>Sold By:</strong><span>{{' '.$customer_bill->seller_name.' ' }}</span>
+                        <strong>Date:</strong> {{'  '. $customer_bill->date.' ' }}
+                    </div>
+                    <br>
+                    <br>
+                    <strong>Sold To.</strong><span>{{' '.$customer_bill->name }}</span>
+                    <strong>Mobile:</strong> {{' '.$customer_bill->phone }}<br>
+                    <strong>Address.</strong><span>{{' '.$customer_bill->address }}</span>
+                </div>
+            </div>
+        </div>
+        <div style="width: 100%; height: 400px; margin-top: 40px; display: flex;">
+            <div style="width: 100%; height: 100px; float: left; padding: 12px;">
+                <table class="table" style="font-family: arial, sans-serif;border-collapse: collapse;width: 100%;">
+                    <thead>
+                    <tr>
+                        <th style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">Sl. No.</th>
+                        <th style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">Product</th>
+                        <th style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">Product Description</th>
+                        <th style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">Unit Price</th>
+                        <th style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">Qty.</th>
+                        <th style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">Total Price</th>
+                    </tr>
+                    </thead>
 
-    ul {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-    }
-    /*=========================================================
-      [ Table ]
-    =========================================================*/
+                    <tbody>
+                    <tr >
+                        <td style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">{{' '.$customer_bill->id }}</td>
+                        <td style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">{{' '.$customer_bill->product_name }}</td>
+                        <td style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">{{' '.$customer_bill->product_description }}</td>
+                        <td style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">{{' '.$customer_bill->price }}</td>
+                        <td style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">{{' '.$customer_bill->quantity }}</td>
+                        <td style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">{{' '.$customer_bill->sub_total }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
-    .custom--table {
-        width: 100%;
-        color: inherit;
-        vertical-align: top;
-        font-weight: 400;
-        border-collapse: collapse;
-        border-bottom: 2px solid #ddd;
-        margin-top: 0;
-    }
-    .table-title{
-        font-size: 24px;
-        font-weight: 600;
-        line-height: 32px;
-        margin-bottom: 10px;
-    }
-    .custom--table thead {
-        font-weight: 700;
-        background: inherit;
-        color: inherit;
-        font-size: 16px;
-        font-weight: 500;
-    }
 
-    .custom--table tbody {
-        border-top: 0;
-        overflow: hidden;
-        border-radius: 10px;
-    }
-    .custom--table thead tr {
-        border-top: 2px solid #ddd;
-        border-bottom: 2px solid #ddd;
-        text-align: left;
-    }
-    .custom--table thead tr th {
-        border-top: 2px solid #ddd;
-        border-bottom: 2px solid #ddd;
-        text-align: left;
-        font-size: 16px;
-        padding: 10px 0;
-    }
-    .custom--table tbody tr {
-        vertical-align: top;
-    }
-    .custom--table tbody tr td {
-        font-size: 14px;
-        line-height: 18px;
-        vertical-align: top;
-    }
-    .custom--table tbody tr td:last-child{
-        padding-bottom: 10px;
-    }
-    .custom--table tbody tr td .data-span {
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 18px;
-    }
-    .custom--table tbody .table_footer_row {
-        border-top: 2px solid #ddd;
-        margin-bottom: 10px !important;
-        padding-bottom: 10px !important;
-
-    }
-    /* invoice area */
-    .invoice-area {
-        padding: 10px 0;
-    }
-
-    .invoice-wrapper {
-        max-width: 650px;
-        margin: 0 auto;
-        box-shadow: 0 0 10px #f3f3f3;
-        padding: 0px;
-    }
-
-    .invoice-header {
-        margin-bottom: 40px;
-    }
-
-    .invoice-flex-contents {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 24px;
-        flex-wrap: wrap;
-    }
-
-    .invoice-logo {}
-
-    .invoice-logo img {}
-
-    .invoice-header-contents {
-        float: right;
-    }
-
-    .invoice-header-contents .invoice-title {
-        font-size: 40px;
-        font-weight: 700;
-    }
-
-    .invoice-details {
-        margin-top: 20px;
-    }
-
-    .invoice-details-flex {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: 24px;
-        flex-wrap: wrap;
-    }
-
-    .invoice-details-title {
-        font-size: 24px;
-        font-weight: 700;
-        line-height: 32px;
-        color: #333;
-        margin: 0;
-        padding: 0;
-    }
-
-    .invoice-single-details {}
-
-    .details-list {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        margin-top: 10px;
-    }
-
-    .details-list .list {
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 18px;
-        color: #666;
-        margin: 0;
-        padding: 0;
-        transition: all .3s;
-    }
-    .details-list .list strong {
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 18px;
-        color: #666;
-        margin: 0;
-        padding: 0;
-        transition: all .3s;
-    }
-
-    .details-list .list a {
-        display: inline-block;
-        color: #666;
-        transition: all .3s;
-        text-decoration: none;
-        margin: 0;
-        line-height: 18px
-    }
-
-    .item-description {
-        margin-top: 10px;
-    }
-
-    .products-item {
-        text-align: left;
-    }
-
-    .invoice-total-count {}
-
-    .invoice-total-count .list-single {
-        display: flex;
-        align-items: center;
-        gap: 30px;
-        font-size: 16px;
-        line-height: 28px;
-    }
-
-    .invoice-total-count .list-single strong {}
-
-    .invoice-subtotal {
-        border-bottom: 2px solid #ddd;
-        padding-bottom: 15px;
-    }
-
-    .invoice-total {
-        padding-top: 10px;
-    }
-
-    .terms-condition-content {
-        margin-top: 30px;
-    }
-
-    .terms-flex-contents {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 20px;
-        flex-wrap: wrap;
-    }
-
-    .terms-left-contents {
-        flex-basis: 50%;
-    }
-
-    .terms-title {
-        font-size: 18px;
-        font-weight: 700;
-        color: #333;
-        margin: 0;
-    }
-
-    .terms-para {
-        margin-top: 10px;
-    }
-
-    .invoice-footer {}
-
-    .invoice-flex-footer {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 30px;
-    }
-
-    .single-footer-item {
-        flex: 1;
-    }
-
-    .single-footer {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .single-footer .icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 30px;
-        width: 30px;
-        font-size: 16px;
-        background-color: #000e8f;
-        color: #fff;
-    }
-
-    .icon-details {
-        flex: 1;
-    }
-
-    .icon-details .list {
-        display: block;
-        text-decoration: none;
-        color: #666;
-        transition: all .3s;
-        line-height: 24px;
-    }
-</style>
-
-<!-- Invoice area Starts -->
-<section class="py-0">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-
+            {{--            <div style="width: 45%; float: left;  padding: 12px;">--}}
+            {{--                Richard McClintock, a Latin scholar from Hampden-Sydney College, is credited with discovering the source--}}
+            {{--                behind the ubiquitous filler text. In seeing a sample of lorem ipsum, his interest was piqued by--}}
+            {{--                consectetur—a genuine, albeit rare, Latin word. Consulting a Latin dictionary led McClintock to a--}}
+            {{--                passage from De Finibus Bonorum et Malorum (“On the Extremes of Good and Evil”), a first-century B.C.--}}
+            {{--                text from the Roman philosopher Cicero.--}}
+            {{--            </div>--}}
+        </div>
+        <div class="col-md-2" style="float: right; width: 90px;">
+            <div class="card">
+                <div class="card-body">
+                    <h4>Invoice/Bill</h4>
+                    <div style="float: right; width: 110px;">
+                        <small>Contact Number :</small>
+                        <small> {{''.  $customer_bill->seller_phone }}</small>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</section>
+</div>
 
-<!-- Invoice area end -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
-
 </html>
