@@ -49,7 +49,7 @@
                     </thead>
 
                     <tbody>
-                    <tr >
+                    <tr>
                         <td style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">{{' '.$customer_bill->id }}</td>
                         <td style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">{{' '.$customer_bill->product_name }}</td>
                         <td style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">{{' '.$customer_bill->product_description }}</td>
@@ -57,11 +57,41 @@
                         <td style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">{{' '.$customer_bill->quantity }}</td>
                         <td style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">{{' '.$customer_bill->sub_total }}</td>
                     </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Subtotal</td>
+                        <td style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">{{' '.$customer_bill->sub_total }}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Vat. & Tax.</td>
+                        <td style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">{{' '.$customer_bill->vat_tax }}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Discount</td>
+                        <td style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">{{' '.$customer_bill->discount }}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Grand Total</td>
+                        <td style=" border: 1px solid #dddddd;text-align: left;padding: 8px;">{{' '.$customer_bill->grand_total }}</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
-
-
             {{--            <div style="width: 45%; float: left;  padding: 12px;">--}}
             {{--                Richard McClintock, a Latin scholar from Hampden-Sydney College, is credited with discovering the source--}}
             {{--                behind the ubiquitous filler text. In seeing a sample of lorem ipsum, his interest was piqued by--}}
@@ -70,15 +100,22 @@
             {{--                text from the Roman philosopher Cicero.--}}
             {{--            </div>--}}
         </div>
-        <div class="col-md-2" style="float: right; width: 90px;">
-            <div class="card">
-                <div class="card-body">
-                    <h4>Invoice/Bill</h4>
-                    <div style="float: right; width: 110px;">
-                        <small>Contact Number :</small>
-                        <small> {{''.  $customer_bill->seller_phone }}</small>
-                    </div>
-                </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h5 style=" border-top: 1px solid #dddddd;padding: 8px;float: left; width: 90px;margin-top: 200px">Received
+                By</h5>
+        </div>
+        <div class="col-md-6">
+            <h5 style=" border-top: 1px solid #dddddd;padding: 8px;float: right; width: 90px;margin-top: 205px">
+                Authorized</h5>
+        </div>
+    </div>
+    <div class="col-md-2" style="float: right; width: 0; margin-top: 320px">
+        <div class="card">
+            <div class="card-body">
+                <h4>Invoice/Bill</h4>
             </div>
         </div>
     </div>
