@@ -10,6 +10,7 @@
     <link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
 
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.33/sweetalert2.all.js"></script>
     <style>
 
@@ -17,7 +18,7 @@
             color: #f7fafc;
         }
         a.btn.btn-sm.btn-outline-warning.rounded-circle i{
-            font-size: 17px;
+            font-size: 14px;
         }
         a.btn.btn-sm.btn-outline-info.rounded-circle:hover {
             color: #f7fafc;
@@ -43,23 +44,24 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($bill as $values)
-                            <tr>
-                               <td>{{$values->bill_id}}</td>
-                               <td>{{$values->order_no}}</td>
-                               <td>{{$values->date}}</td>
-                                <td>
-                                    <a href="#" class="btn btn-sm btn-outline-info rounded-circle" id="viewData" data-bs-toggle="modal" data-modalValue="{{$values->id}}" onclick="viewModalData({{$values->id}})"  data-bs-target="#cardModal"><i class="fa-regular fa-eye"></i> </a>
-                                    <a href="#" class="btn btn-sm btn-outline-success rounded-circle" onclick="editData({{$values->id}})"><i class=" bx bx-edit "></i> </a>
-                                    <button class="btn btn-sm btn-outline-danger rounded-circle" onclick="deleteData({{$values->id}})"><i class='bx bx-trash'></i> </button>
+{{--                        @foreach($bill as $values)--}}
+{{--                            <tr>--}}
+{{--                               <td>{{$values->bill_id}}</td>--}}
+{{--                               <td>{{$values->order_no}}</td>--}}
+{{--                               <td>{{$values->date}}</td>--}}
+{{--                                <td>--}}
+{{--                                    <a href="#" class="btn btn-sm btn-outline-info rounded-circle" id="viewData" data-bs-toggle="modal" data-modalValue="{{$values->id}}" onclick="viewModalData({{$values->id}})"  data-bs-target="#cardModal"><i class="fa-regular fa-eye"></i> </a>--}}
+{{--                                    <a href="#" class="btn btn-sm btn-outline-success rounded-circle" onclick="editData({{$values->id}})"><i class=" bx bx-edit "></i> </a>--}}
+{{--                                    <button class="btn btn-sm btn-outline-danger rounded-circle" onclick="deleteData({{$values->id}})"><i class='bx bx-trash'></i> </button>--}}
+{{--                                    --}}
 {{--                                    <button  onclick="printBtn({{$values->id}})" class="btn btn-sm btn-outline-warning rounded-circle"><i class="bx bx-printer"></i></button>--}}
 {{--                                    <button class="btn btn-sm btn-outline-secondary rounded-circle" onclick="downloadBtn({{$values->id}})"><i class='bx bx-download'></i> </button>--}}
 
-                                    <a href="{{ route('generate.pdf',['id'=> $values->id]) }}" class="btn btn-sm btn-outline-warning rounded-circle"><i class="bx bx-printer"></i></a>
-                                    <a href="{{ route('download.pdf',['id'=> $values->id]) }}"  class="btn btn-sm btn-outline-secondary rounded-circle" ><i class='bx bx-download'></i> </a>
-                                </td>
-                            </tr>
-                        @endforeach
+{{--                                    <a href="{{ route('generate.pdf',['id'=> $values->id]) }}" class="btn btn-sm btn-outline-warning rounded-circle"><i class="bx bx-printer"></i></a>--}}
+{{--                                    <a href="{{ route('download.pdf',['id'=> $values->id]) }}"  class="btn btn-sm btn-outline-secondary rounded-circle" ><i class='bx bx-download'></i> </a>--}}
+{{--                                </td>--}}
+{{--                            </tr>--}}
+{{--                        @endforeach--}}
                         </tbody>
                     </table>
                 </div>
@@ -109,7 +111,7 @@
                         <input type="text" class="form-control" name="name" id="name" placeholder="Name"/>
                         <span class="text-danger" id="nameError"></span>
                     </div>
-                    <div class="from-group mb-2 row">
+                     <div class="from-group mb-2 row">
                         <div class="col-md-6">
                             <label for="division">Division</label>
                             <select name="division" id="division" class="form-control" >
@@ -186,7 +188,7 @@
                     <div class="from-group d-md-flex justify-content-md-end">
                             <input type="hidden" class="form-control" id="id" />
                             <button class="btn btn-info text-light" id="billGenerateBtn" type="button" onclick="addData()">Generate</button>
-                            <button class="btn btn-info text-light" id="billUpdateBtn" type="button" onclick="updateData()" >Update</button>
+                            <button class="btn btn-info text-light" id="billUpdateBtn" type="button" onclick="updateData()">Update</button>
                     </div>
 
                 </div>
@@ -286,14 +288,18 @@
     </div>
 
 </div>
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
 
 <script>
-    $(document).ready(function () {
+
+    function initializeDataTable()
+    {
         $('#example').DataTable();
-    });
+    }
+
 
     $("#billGenerate").show();
     $("#billEdit").hide();
@@ -331,23 +337,26 @@
             dataType: 'json',
             url: "/all-customer-bill",
             success:function (response){
-                // var data ="";
-                // $.each(response, function (key,value){
-                //     data = data + "<tr>"
-                //     data = data + "<td>"+value.bill_id+"</td>"
-                //     data = data + "<td>"+value.order_no+"</td>"
-                //     data = data + "<td>"+value.date+"</td>"
-                //     data = data + "<td>"
-                //     data = data + "<button class='btn btn-info text-light' onclick='editData("+value.id+")'>Edit</button>"
-                //     data = data + "<button class='btn btn-danger m-2' onclick='deleteData("+value.id+")'>  Delete</button>"
-                //     data = data + "</td>"
-                //     data = data + "</tr>"
-                // })
-                // $('tbody').html(data);
+                var data ="";
+                $.each(response, function (key,value){
+                    data = data + "<tr>"
+                    data = data + "<td>"+value.bill_id+"</td>"
+                    data = data + "<td>"+value.order_no+"</td>"
+                    data = data + "<td>"+value.date+"</td>"
+                    data = data + "<td>"
+                    data = data + "<button class='btn btn-sm btn-outline-success rounded-circle' onclick='editData("+value.id+")'><i class='bx bx-edit'></i></button>"
+                    data = data + "<button class='btn btn-sm btn-outline-danger rounded-circle m-1' onclick='deleteData("+value.id+")'><i class='bx bx-trash'></i></button>"
+                    data = data + "<a href='/generate-pdf/"+value.id+"' class='btn btn-sm btn-outline-warning rounded-circle'><i class='bx bx-printer'></i></a>"
+                    data = data + "<a href='/download-pdf/"+value.id+"' class='btn btn-sm btn-outline-secondary rounded-circle m-1'><i class='bx bx-download'></i></a>"
+                    data = data + "</td>"
+                    data = data + "</tr>"
+                })
+                $('tbody').html(data);
+                initializeDataTable();
             }
         })
     }
-    // view();
+    view();
 
     //=============== View Data in Modal ================
     function viewModalData(id){
@@ -394,6 +403,7 @@
 
         $.ajax({
             type: "POST",
+            url: "/generate-bill-store/data",
             dataType: "json",
             data: {
                 bill_id:                bill_id,
@@ -416,9 +426,10 @@
                 discount:               discount,
                 grand_total:            grand_total
             },
-            url: "/generate-bill-store",
+
             success: function (data){
-                clearData()
+                clearData();
+                view();
                 const Msg = Swal.mixin({
                     toast:'true',
                     position: 'top-end',
@@ -587,6 +598,7 @@
                     type: 'success',
                     title: 'Data Updated Successfully'
                 })
+                view();
                 // End Alert
                 console.log('Successfully Data Update');
             },
@@ -631,10 +643,11 @@
                                 'Your file has been deleted.',
                                 'success'
                             )
+                            view();
                         }
                     })
                 }
-                this.view();
+
             })
     }
 
