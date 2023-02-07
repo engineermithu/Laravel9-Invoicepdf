@@ -31,8 +31,8 @@ return new class extends Migration
             $table->double('price',2);
             $table->integer('quantity');
             $table->double('sub_total',2);
-            $table->integer('vat_tax');
-            $table->integer('discount');
+            $table->integer('vat_tax')->nullable();
+            $table->integer('discount')->nullable();
             $table->double('grand_total',2);
             $table->timestamps();
         });

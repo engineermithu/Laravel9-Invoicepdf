@@ -23,6 +23,7 @@ Route::get('/', function () {
     $divisions = Division::all();
     $districts = District::all();
     $bill = \App\Models\GenerateBill::all();
+
 //    return $data;
     return view('home',compact('bill','divisions','districts'));
 
@@ -35,7 +36,7 @@ Route::get('/generate-pdf/{id}',[PdfController::class,'generatePdf'])->name('gen
 Route::get('/download-pdf/{id}',[PdfController::class,'downloadPdf'])->name('download.pdf');
 
 Route::post('/generate-bill-store/data', [GenerateBillController::class,'store']);
-Route::get('/modal-view-data/{id}', [GenerateBillController::class,'showModalData']);
+Route::get('/modal_view_data/{id}', [GenerateBillController::class,'showModalData']);
 Route::delete('/generate-bill-remove/{id}', [GenerateBillController::class,'destroy']);
 Route::get('/all-customer-bill', [GenerateBillController::class,'show']);
 Route::get('/generate-bill-edit/{id}', [GenerateBillController::class,'edit']);

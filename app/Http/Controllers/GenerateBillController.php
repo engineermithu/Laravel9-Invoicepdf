@@ -6,6 +6,7 @@ use App\Http\Requests\BillStoreRequest;
 use App\Http\Requests\BillUpdateRequest;
 use App\Models\GenerateBill;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class GenerateBillController extends Controller
 {
@@ -49,6 +50,7 @@ class GenerateBillController extends Controller
 
             return response()->json($data);
         }catch (\Exception $e){
+            Log::debug($e->getMessage());
             return response()->json($e);
         }
 
@@ -64,6 +66,8 @@ class GenerateBillController extends Controller
     public function showModalData($id)
     {
         $data = GenerateBill::find($id);
+//        dd($values);
+//        return view('home',compact('values'));
         return response()->json($data);
     }
 
